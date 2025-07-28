@@ -19,6 +19,13 @@ lerna-debug.log*
 /coverage
 /.nyc_output
 
+# Next.js
+.next/
+out/
+
+# Vercel
+.vercel
+
 # IDEs and editors
 /.idea
 .project
@@ -55,4 +62,9 @@ pids
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-/generated/prisma
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Misc
+*.pem
