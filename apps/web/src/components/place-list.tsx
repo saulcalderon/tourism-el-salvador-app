@@ -2,23 +2,17 @@
 
 import useSWR, { mutate } from 'swr';
 import { PlaceCard } from './place-card';
-import { fetchPlaces, likePlace, deletePlace } from '@/lib/api';
+import { fetchPlaces, deletePlace } from '@/lib/api';
 import { toast } from 'sonner';
 
 export default function PlaceList() {
-  const { data: places, error, isLoading } = useSWR('places', fetchPlaces, {
+  const {
+    data: places,
+    error,
+    isLoading,
+  } = useSWR('places', fetchPlaces, {
     refreshInterval: 5000,
   });
-
-  const handleLike = async (placeId: string) => {
-    try {
-      await likePlace(placeId);
-      mutate('places');
-    } catch (error) {
-      console.error('Failed to like place:', error);
-      toast.error('Error al dar like al lugar. Por favor intenta de nuevo.');
-    }
-  };
 
   const handleDelete = async (placeId: string) => {
     try {
@@ -59,12 +53,7 @@ export default function PlaceList() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {places.map((place) => (
-        <PlaceCard
-          key={place.id}
-          place={place}
-          onLike={handleLike}
-          onDelete={handleDelete}
-        />
+        <PlaceCard key={place.id} place={place} onDelete={handleDelete} />
       ))}
     </div>
   );
