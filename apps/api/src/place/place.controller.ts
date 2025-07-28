@@ -9,11 +9,11 @@ import {
 } from '@nestjs/common';
 import { ApiResponse, ApiOperation } from '@nestjs/swagger';
 
-import { PLACE_ID_RESPONSE_SCHEMA } from 'src/constants';
 import { PlaceService } from './place.service';
 import { CreatePlaceDto } from './dto/create-place.dto';
 import { UpdatePlaceDto } from './dto/update-place.dto';
 import { PlaceResponseDto } from './dto/place.response.dto';
+import { PlaceIdResponseDto } from './dto/place-id.response.dto';
 
 @Controller('places')
 export class PlaceController {
@@ -23,7 +23,7 @@ export class PlaceController {
   @ApiResponse({
     status: 201,
     description: 'The place has been successfully created.',
-    schema: PLACE_ID_RESPONSE_SCHEMA,
+    type: PlaceIdResponseDto,
   })
   @Post()
   create(@Body() createPlaceDto: CreatePlaceDto) {
@@ -56,7 +56,7 @@ export class PlaceController {
   @ApiResponse({
     status: 200,
     description: 'The like has been successfully created.',
-    schema: PLACE_ID_RESPONSE_SCHEMA,
+    type: PlaceIdResponseDto,
   })
   @Post(':id/like')
   createLike(@Param('id') id: string) {
@@ -78,7 +78,7 @@ export class PlaceController {
   @ApiResponse({
     status: 200,
     description: 'The place has been successfully deleted.',
-    schema: PLACE_ID_RESPONSE_SCHEMA,
+    type: PlaceIdResponseDto,
   })
   @Delete(':id')
   remove(@Param('id') id: string) {

@@ -1,12 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { PlaceIdResponseDto } from './place-id.response.dto';
 
-export class PlaceResponseDto {
-  @ApiProperty({
-    description: 'The ID of the place',
-    example: 'cmdmpha1w0000m7yolaqxof0e',
-  })
-  id: string;
-
+export class PlaceResponseDto extends PlaceIdResponseDto {
   @ApiProperty({
     description: 'The name of the place',
     example: 'Santa Ana Volcano',

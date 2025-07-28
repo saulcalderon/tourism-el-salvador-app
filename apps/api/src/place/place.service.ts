@@ -4,19 +4,22 @@ import { CreatePlaceDto } from './dto/create-place.dto';
 import { UpdatePlaceDto } from './dto/update-place.dto';
 import { PrismaService } from '../modules/prisma/prisma.service';
 import { PlaceResponseDto } from './dto/place.response.dto';
+import { PlaceIdResponseDto } from './dto/place-id.response.dto';
 
 @Injectable()
 export class PlaceService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(createPlaceDto: CreatePlaceDto): Promise<string> {
+  async create(createPlaceDto: CreatePlaceDto): Promise<PlaceIdResponseDto> {
     const place = await this.prismaService.place.create({
       data: {
         ...createPlaceDto,
       },
     });
 
-    return place.id;
+    return {
+      id: place.id,
+    };
   }
 
   findAll(): Promise<PlaceResponseDto[]> {
@@ -72,16 +75,18 @@ export class PlaceService {
     });
   }
 
-  async remove(id: string): Promise<string> {
+  async remove(id: string): Promise<PlaceIdResponseDto> {
     await this.findOne(id);
     await this.prismaService.place.delete({
       where: { id },
     });
 
-    return id;
+    return {
+      id,
+    };
   }
 
-  async createLike(id: string): Promise<string> {
+  async createLike(id: string): Promise<PlaceIdResponseDto> {
     await this.findOne(id);
 
     await this.prismaService.place.update({
@@ -89,6 +94,8 @@ export class PlaceService {
       data: { likesCount: { increment: 1 } },
     });
 
-    return id;
+    return {
+      id,
+    };
   }
 }
